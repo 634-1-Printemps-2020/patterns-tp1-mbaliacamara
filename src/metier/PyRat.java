@@ -3,9 +3,24 @@ package metier;
 import java.util.*;
 
 public class PyRat {
+    private List<Point> fromages;
+    private Boolean[][] tabFromages;
+    private Map<Point, List<Point>> laby;
+    private Boolean[][] tabPassagePossible;
+    private Map<Point, List<Point>> ptsInatteignables;
 
     /* Méthode appelée une seule fois permettant d'effectuer des traitements "lourds" afin d'augmenter la performace de la méthode turn. */
     public void preprocessing(Map<Point, List<Point>> laby, int labyWidth, int labyHeight, Point position, List<Point> fromages) {
+        this.fromages = fromages;
+        this.laby = laby;
+
+        //une boucle de parcours dans la List<Point> fromages à la recherche de pos
+        tabFromages = new Boolean[labyWidth][labyHeight];
+        for (Point p: fromages) {
+            tabFromages[p.getX()][p.getY()] = true;
+        }
+
+
     }
 
     /* Méthode de test appelant les différentes fonctionnalités à développer.
@@ -26,19 +41,19 @@ public class PyRat {
     /* Regarde dans la liste des fromages s’il y a un fromage à la position pos.
         @return true s'il y a un fromage à la position pos, false sinon. */
     private boolean fromageIci(Point pos) {
-        return false;
+        return fromages.contains(pos);
     }
 
     /* Regarde de manière performante (accès en ordre constant) s’il y a un fromage à la position pos.
         @return true s'il y a un fromage à la position pos, false sinon. */
     private boolean fromageIci_EnOrdreConstant(Point pos) {
-        return false;
+        return tabFromages[pos.getX()][pos.getY()];
     }
 
     /* Indique si le joueur peut passer de la position (du Point) « de » au point « a ».
         @return true s'il y a un passage depuis  « de » vers « a ». */
     private boolean passagePossible(Point de, Point a) {
-        return false;
+        return laby.get(de).contains(a);
     }
 
     /* Indique si le joueur peut passer de la position (du Point) « de » au point « a »,
@@ -51,6 +66,6 @@ public class PyRat {
     /* Retourne la liste des points qui ne peuvent pas être atteints depuis la position « pos ».
         @return la liste des points qui ne peuvent pas être atteints depuis la position « pos ». */
     private List<Point> pointsInatteignables(Point pos) {
-        return null;
+        return ptsInatteignables.get(pos);
     }
 }
